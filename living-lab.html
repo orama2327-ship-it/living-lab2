@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مختبر أستكشف: الحية وغير الحية</title>
+<style>
+:root{--bg:#eef6fb;--card:#fff;--ink:#12324a;--mut:#4d6a80;--br:#bcd6e6;--acc:#1f8fc9;--ok:#2e8b3d;--no:#c0392b;--sun:#f6b800;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1c27;--card:#16293a;--ink:#e6f1f8;--mut:#9db6c8;--br:#2c465b;--acc:#4db3ea;--ok:#5fcf70;--no:#ff7a6b}}
+:root[data-theme="dark"]{--bg:#0e1c27;--card:#16293a;--ink:#e6f1f8;--mut:#9db6c8;--br:#2c465b;--acc:#4db3ea;--ok:#5fcf70;--no:#ff7a6b}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Naskh Arabic","Tajawal",Tahoma,sans-serif;line-height:1.9;font-size:17px}
+main{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:26px;margin:8px 0}
+h2{font-size:20px;margin:0 0 6px;color:var(--acc)}
+.sub{color:var(--mut);margin:0 0 14px}
+.card{background:var(--card);border:2px solid var(--br);border-radius:14px;padding:16px;margin:14px 0}
+.card.lock{opacity:.45;pointer-events:none}
+.q{font-weight:700}
+textarea{width:100%;box-sizing:border-box;min-height:70px;border:2px solid var(--br);border-radius:10px;padding:8px;background:var(--bg);color:var(--ink);font:inherit}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:8px 16px;background:var(--acc);color:#fff}
+button.alt{background:transparent;color:var(--acc);border:2px solid var(--acc)}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--sun)}
+button:disabled{opacity:.5;cursor:default}
+.ans{display:none;margin-top:8px;padding:10px;border-radius:10px;background:var(--bg);border-inline-start:5px solid var(--ok)}
+.ans.on{display:block}
+.garden{position:relative;height:250px;border-radius:12px;overflow:hidden;background:linear-gradient(#8fd0f3 0 30%,#7cc060 30%);border:2px solid var(--br)}
+.sun{position:absolute;top:8px;left:12px;font-size:34px}
+.sq{position:absolute;inset:60px 90px 25px;border:5px solid transparent;transition:.3s}
+.sq.s1{border-top-color:#d63a3a}.sq.s2{border-right-color:#d63a3a}.sq.s3{border-bottom-color:#d63a3a}.sq.s4{border-left-color:#d63a3a}
+.item{position:absolute;font-size:34px;background:none;padding:0;border-radius:50%;line-height:1.2}
+.item.sel{outline:3px solid var(--sun);background:#fff8}
+.item.done{opacity:.35;pointer-events:none}
+.strings{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.str{height:10px;width:70px;background:#d63a3a;border-radius:6px;display:inline-block}
+.str.used{opacity:.25}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{border:2px solid var(--br);padding:6px;vertical-align:top;text-align:center}
+th{background:var(--bg)}
+td{height:70px;min-width:120px}
+.tag{display:inline-block;margin:2px;padding:0 8px;border-radius:14px;background:var(--bg);border:1px solid var(--br)}
+.fb{min-height:30px;font-weight:700}
+.fb.ok{color:var(--ok)}.fb.no{color:var(--no)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.wrap{overflow-x:auto}
+</style>
+</head>
+<body>
+<main>
+<h1>🔬 أستكشف: ما أوجه الاختلاف بين المخلوقات الحية والأشياء غير الحية؟</h1>
+<p class="sub"><b>الهدف:</b> أميّز بين المخلوقات الحية والأشياء غير الحية. أكمل الخطوات بالترتيب، وكل خطوة تُفتح بعد إنهاء السابقة.</p>
+
+<!-- الأدوات -->
+<section class="card">
+<h2>أحتاج إلى</h2>
+<div class="strings" aria-label="أربعة خيوط"><span class="str"></span><span class="str"></span><span class="str"></span><span class="str"></span></div>
+<div>٤ خيوط، طول كل منها متر.</div>
+</section>
+
+<!-- 1 -->
+<section class="card" id="s1">
+<h2>الخطوة ١: أتوقع</h2>
+<p class="q">فيم تتشابه جميع المخلوقات الحية؟ وفيم تتشابه الأشياء غير الحية؟</p>
+<textarea id="p1" placeholder="اكتب توقعك هنا..."></textarea>
+<div class="row" style="margin-top:8px"><button onclick="done(1)">حفظ التوقع والمتابعة</button></div>
+</section>
+
+<!-- 2 -->
+<section class="card lock" id="s2">
+<h2>الخطوة ٢: أرسم جدولًا</h2>
+<p>أرسم جدولًا كما في الشكل المجاور: عمود للمخلوقات الحية وعمود للأشياء غير الحية.</p>
+<div class="wrap"><table><tr><th>المخلوقات الحية</th><th>الأشياء غير الحية</th></tr>
+<tr><td id="t2a" style="color:var(--mut)"></td><td id="t2b" style="color:var(--mut)"></td></tr></table></div>
+<div class="row" style="margin-top:8px"><button onclick="drawT()" id="b2">ارسم الجدول</button><button onclick="done(2)" id="n2" disabled>التالي</button></div>
+</section>
+
+<!-- 3 -->
+<section class="card lock" id="s3">
+<h2>الخطوة ٣: أعمل مربعًا</h2>
+<p>أستخدم الخيوط الأربعة لعمل مربّع في حديقة المدرسة أو حديقة مجاورة. اضغط «مدّ خيطًا» أربع مرات.</p>
+<div class="garden" id="g3"><span class="sun">☀️</span><div class="sq" id="sq"></div></div>
+<div class="row" style="margin-top:8px"><button onclick="lay()" id="b3">مدّ خيطًا (٠/٤)</button><button onclick="done(3)" id="n3" disabled>التالي</button></div>
+</section>
+
+<!-- 4 -->
+<section class="card lock" id="s4">
+<h2>الخطوة ٤: ألاحظ</h2>
+<p>أبحث عن المخلوقات الحية في المربّع وأكتب أسماءها في العمود المخصص لها. <b>كيف أعرف أن هذه المخلوقات حية؟</b> ثم أكتب أسماء الأشياء غير الحية في العمود المخصص لها.</p>
+<p class="sub">اضغط على أي شيء داخل المربع لفحصه، ثم اختر تصنيفه.</p>
+<div class="garden" id="g4"></div>
+<div id="probe" class="card" style="margin:8px 0;display:none">
+ <div>الشيء المفحوص: <b id="pn"></b></div>
+ <div class="row"><button onclick="cls(true)">حي</button><button class="alt" onclick="cls(false)">غير حي</button></div>
+</div>
+<div class="fb" id="fb"></div>
+<div class="wrap"><table><tr><th>المخلوقات الحية</th><th>الأشياء غير الحية</th></tr><tr><td id="tl"></td><td id="tn"></td></tr></table></div>
+<div class="row" style="margin-top:8px"><span id="cnt" class="sub">صنّفتَ ٠ من ١٢</span><button onclick="done(4)" id="n4" disabled>التالي</button></div>
+</section>
+
+<!-- 5 -->
+<section class="card lock" id="s5">
+<h2>أستخلص النتائج</h2>
+<p class="q">٥. أفسّر البيانات: ما الخصائص المشتركة بين المخلوقات الحية؟ وما الخصائص المشتركة بين الأشياء غير الحية؟</p>
+<textarea placeholder="اكتب إجابتك أولًا..."></textarea>
+<div class="row" style="margin-top:8px"><button class="alt" onclick="show('a5')">أظهر الإجابة النموذجية</button></div>
+<div class="ans" id="a5"><b>المخلوقات الحية:</b> تتغذى وتحتاج إلى الماء والهواء، تنمو وتتكاثر، تستجيب للمؤثرات من حولها، وتموت في النهاية.<br><b>الأشياء غير الحية:</b> لا تتغذى ولا تتنفس، لا تنمو ولا تتكاثر ولا تستجيب للمؤثرات، ولا تموت لأنها ليست حية أصلًا.</div>
+
+<p class="q" style="margin-top:16px">٦. أتبادل الجدول مع زملائي: هل هناك تشابه بين الخصائص التي سجّلوها والخصائص التي سجّلتُها؟</p>
+<textarea placeholder="اكتب ملاحظتك بعد مقارنة جدولك بجدول زميلك..."></textarea>
+<div class="row" style="margin-top:8px"><button class="alt" onclick="show('a6')">أظهر الإجابة النموذجية</button></div>
+<div class="ans" id="a6">نعم، هناك تشابه كبير؛ فمعظم الطلاب سجّلوا أن الحية تنمو وتتغذى وتتحرك أو تستجيب، وأن غير الحية لا تنمو ولا تتغذى. وقد تختلف الأمثلة (نبات أو حشرة أو حجر) لكن الخصائص تبقى واحدة.</div>
+
+<p class="q" style="margin-top:16px">٧. أستنتج: كيف تختلف المخلوقات الحية عن الأشياء غير الحية؟</p>
+<textarea placeholder="اكتب استنتاجك..."></textarea>
+<div class="row" style="margin-top:8px"><button class="alt" onclick="show('a7')">أظهر الإجابة النموذجية</button></div>
+<div class="ans" id="a7">تختلف المخلوقات الحية عن غير الحية بأنها تحتاج إلى الغذاء والماء والهواء، وتنمو وتتكاثر وتستجيب لما حولها وتموت، أما الأشياء غير الحية فلا تقوم بأي من هذه العمليات.</div>
+<div class="row" style="margin-top:12px"><button onclick="done(5)">إنهاء وفتح «أستكشف أكثر»</button></div>
+</section>
+
+<!-- more -->
+<section class="card lock" id="s6">
+<h2>أستكشف أكثر: أجرّب</h2>
+<p class="q">هل يتأثر عدد المخلوقات الحية في منطقة معينة بكمية ضوء الشمس؟ أضع خطة للإجابة عن ذلك، ثم أجرّبها عمليًا.</p>
+<p>جرّب افتراضيًا: اضغط لعدّ المخلوقات الحية في مربّعين متساويين، أحدهما مشمس والآخر مظلل.</p>
+<div class="row"><button onclick="sunTest()" id="bs">أجرِ القياس (٣ أيام)</button></div>
+<div class="wrap"><table id="ts" style="display:none"><tr><th>اليوم</th><th>☀️ مربّع مشمس</th><th>🌳 مربّع مظلل</th></tr></table></div>
+<div class="ans" id="a8">
+<b>الخطة النموذجية:</b><br>
+١. الفرضية: عدد المخلوقات الحية يزداد كلما زادت كمية ضوء الشمس.<br>
+٢. أختار مربّعين متساويين في المساحة (١ م × ١ م): الأول في مكان مشمس والثاني في مكان مظلل، مع ثبات باقي العوامل (نوع التربة والماء).<br>
+٣. أعدّ المخلوقات الحية في كل مربّع (نباتات وحشرات) في الوقت نفسه من كل يوم لمدة أيام، وأسجّلها في جدول.<br>
+٤. أقارن الأعداد.<br>
+<b>النتيجة:</b> نعم، يتأثر العدد؛ فالمنطقة المشمسة تحوي غالبًا نباتات وحشرات أكثر لأن النباتات تحتاج الضوء لتصنع غذاءها، والحيوانات تعتمد عليها في غذائها.</div>
+</section>
+</main>
+<script>
+var $=function(i){return document.getElementById(i)};
+function done(n){var nx=$('s'+(n+1));if(nx){nx.classList.remove('lock');nx.scrollIntoView({behavior:'smooth'})}}
+function show(i){$(i).classList.add('on')}
+function drawT(){$('t2a').textContent='اكتب هنا';$('t2b').textContent='اكتب هنا';$('b2').disabled=true;$('n2').disabled=false}
+var used=0;
+function lay(){if(used>=4)return;used++;$('sq').classList.add('s'+used);document.querySelectorAll('.str')[used-1].classList.add('used');
+$('b3').textContent='مدّ خيطًا ('+used+'/4)';if(used==4){$('b3').disabled=true;$('b3').textContent='تم عمل المربع ✔';$('n3').disabled=false}}
+var items=[
+["🌿","عشبة",1,"تنمو وتحتاج إلى الماء وضوء الشمس"],["🦋","فراشة",1,"تتحرك وتتغذى وتتكاثر"],["🐜","نملة",1,"تتغذى وتتحرك وتستجيب لما حولها"],
+["🌳","شجرة",1,"تنمو وتتكاثر وتصنع غذاءها"],["🌼","زهرة",1,"تنمو وتحتاج إلى الماء والهواء"],["🐦","طائر",1,"يتنفس ويتغذى ويتكاثر"],
+["🪨","حجر",0,"لا ينمو ولا يتغذى ولا يتكاثر"],["🟫","تراب",0,"لا يتنفس ولا ينمو"],["💧","ماء",0,"لا ينمو ولا يتكاثر"],
+["🥤","علبة",0,"صنعها الإنسان ولا تنمو"],["🪑","مقعد",0,"لا يتغذى ولا يستجيب"],["☁️","سحابة",0,"لا تنمو ولا تتكاثر"]];
+var pos=[[15,52],[30,30],[45,68],[60,45],[75,72],[22,75],[38,50],[52,28],[68,60],[80,38],[12,35],[57,78]];
+var cur=null,cd=0;
+items.forEach(function(it,i){var b=document.createElement('button');b.className='item';b.textContent=it[0];b.title=it[1];b.setAttribute('aria-label',it[1]);
+b.style.left=pos[i][0]+'%';b.style.top=pos[i][1]+'%';b.onclick=function(){cur=i;document.querySelectorAll('.item').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');
+$('probe').style.display='block';$('pn').textContent=it[0]+' '+it[1];$('fb').textContent='';};b.id='it'+i;$('g4').appendChild(b)});
+function cls(alive){if(cur===null)return;var it=items[cur],ok=(alive==!!it[2]);var fb=$('fb');
+if(!ok){fb.className='fb no';fb.textContent='حاول مرة أخرى: فكّر هل ينمو ويتغذى ويتكاثر؟';return}
+fb.className='fb ok';fb.textContent='صحيح! '+it[1]+(alive?' مخلوق حي لأنه ':' شيء غير حي لأنه ')+it[3]+'.';
+var t=document.createElement('span');t.className='tag';t.textContent=it[0]+' '+it[1];(alive?$('tl'):$('tn')).appendChild(t);
+$('it'+cur).classList.add('done');$('it'+cur).classList.remove('sel');cur=null;$('probe').style.display='none';cd++;
+$('cnt').textContent='صنّفتَ '+cd+' من 12';if(cd==12)$('n4').disabled=false}
+function sunTest(){var t=$('ts');t.style.display='table';$('bs').disabled=true;
+var d=[[9,4],[10,5],[11,4]];d.forEach(function(r,i){var tr=t.insertRow();tr.insertCell().textContent='اليوم '+(i+1);tr.insertCell().textContent=r[0];tr.insertCell().textContent=r[1]});
+show('a8')}
+</script>
+</body>
+</html>
